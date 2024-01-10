@@ -8,6 +8,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
   const [column, setColumn] = useState('population');
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
+  const [numberFilters, setNumberFilters] = useState<any[]>([]);
 
   const saveOptions = (target: any) => {
     if (target.name === 'coluna') {
@@ -22,17 +23,46 @@ function AppProvider({ children }: { children: React.ReactNode }) {
   };
 
   const handleFilterNumber = () => {
-    const newFilteredData = data.filter((planet: any) => {
-      if (comparison === 'maior que') {
-        return Number(planet[column]) > Number(value);
-      }
-      if (comparison === 'menor que') {
-        return Number(planet[column]) < Number(value);
-      }
-      return Number(planet[column]) === Number(value);
-    });
-    setFilteredData(newFilteredData);
+    const newFilter = {
+      column,
+      comparison,
+      value,
+    };
+    setNumberFilters([...numberFilters, newFilter]);
+    console.log(numberFilters);
   };
+
+  useEffect(() => {
+    const updateData = () => {
+      let newFilteredData = data;
+      console.log(newFilteredData);
+      numberFilters.forEach(
+        ({
+          column: columnFilter,
+          comparison: comparisonFilter,
+          value: valueFilter,
+        }) => {
+          newFilteredData = newFilteredData.filter((planet: any) => {
+            if (comparisonFilter === 'maior que') {
+              return Number(planet[columnFilter]) > Number(valueFilter);
+            }
+            if (comparisonFilter === 'menor que') {
+              return Number(planet[columnFilter]) < Number(valueFilter);
+            }
+            if (comparisonFilter === 'igual a') {
+              return Number(planet[columnFilter]) === Number(valueFilter);
+            }
+            return planet;
+          });
+        },
+      );
+
+      setFilteredData(newFilteredData);
+      console.log(newFilteredData);
+    };
+
+    updateData();
+  }, [data, filter, numberFilters]);
 
   useEffect(() => {
     const fetchData = async () => {
