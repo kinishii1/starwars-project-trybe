@@ -3,6 +3,8 @@ import AppContext from './AppContext';
 
 function AppProvider({ children }: { children: React.ReactNode }) {
   const [data, setData] = useState([]);
+  const [filter, setFilter] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -19,7 +21,22 @@ function AppProvider({ children }: { children: React.ReactNode }) {
     fetchData();
   }, []);
 
-  return <AppContext.Provider value={ { data } }>{children}</AppContext.Provider>;
+  useEffect(() => {
+    const updateData = () => {
+      const newFilteredData = data.filter((planet: any) => planet
+        .name.toLowerCase()
+        .includes(filter.toLowerCase()));
+      console.log(newFilteredData);
+      setFilteredData(newFilteredData);
+    };
+    updateData();
+  }, [data, filter]);
+
+  return (
+    <AppContext.Provider value={ { data, setFilter, filteredData } }>
+      {children}
+    </AppContext.Provider>
+  );
 }
 
 export default AppProvider;
