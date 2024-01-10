@@ -74,8 +74,8 @@ function Table() {
           Filtrar
         </button>
       </div>
-      <table>
-        <thead>
+      <table data-testid="table">
+        <thead data-testid="table-header">
           <tr>
             {dataKeys.map((key) => (
               <th key={ key }>{key}</th>
