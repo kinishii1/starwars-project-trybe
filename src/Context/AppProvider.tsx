@@ -25,7 +25,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
       (numberFilter) => numberFilter.column !== filterToRemove,
     );
     setNumberFilters(newNumberFilters);
-    setColumnOptions((prev) => [...prev, column]);
+    setColumnOptions((prev) => [...prev, filterToRemove]);
   };
 
   const excludeAllNumberFilters = () => {
@@ -184,6 +184,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
         saveSortOptions,
         setOrderOpt,
         setSort,
+        filter,
       } }
     >
       {children}
