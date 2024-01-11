@@ -16,6 +16,9 @@ function AppProvider({ children }: { children: React.ReactNode }) {
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [numberFilters, setNumberFilters] = useState<any[]>([]);
+  const [orderOpt, setOrderOpt] = useState('population');
+  const [sort, setSort] = useState('ASC');
+  const [order, setOrder] = useState({ orderOpt, sort });
 
   const excludeNumberFilter = (filterToRemove: any) => {
     const newNumberFilters = numberFilters.filter(
@@ -47,6 +50,14 @@ function AppProvider({ children }: { children: React.ReactNode }) {
     if (target.name === 'valor') {
       setValue(target.value);
     }
+    if (target.name === 'order') {
+      setOrderOpt(target.value);
+      console.log(orderOpt);
+    }
+    if (target.name === 'sort') {
+      setSort(target.value);
+      console.log(sort);
+    }
   };
 
   const updtadeColumnOptions = () => {
@@ -65,6 +76,29 @@ function AppProvider({ children }: { children: React.ReactNode }) {
     };
     setNumberFilters([...numberFilters, newFilter]);
     console.log(numberFilters);
+  };
+
+  const handleSort = () => {
+    const newFilteredData = filteredData.sort((a: any, b: any) => {
+      if (a[orderOpt] === 'unknown') return 1;
+      if (b[orderOpt] === 'unknown') return -1;
+
+      if (sort === 'ASC') {
+        return a[orderOpt] - b[orderOpt];
+      }
+      return b[orderOpt] - a[orderOpt];
+    });
+    setFilteredData(newFilteredData);
+  };
+
+  const saveSortOptions = () => {
+    const newOrder = {
+      orderOpt,
+      sort,
+    };
+    setOrder(newOrder);
+    console.log(order);
+    handleSort();
   };
 
   useEffect(() => {
@@ -121,6 +155,11 @@ function AppProvider({ children }: { children: React.ReactNode }) {
         .filter((planet: any) => planet
           .name.toLowerCase().includes(filter.toLowerCase()));
       console.log(newFilteredData);
+
+      if (orderOpt !== '') {
+        handleSort();
+      }
+
       setFilteredData(newFilteredData);
     };
     updateData();
@@ -141,6 +180,10 @@ function AppProvider({ children }: { children: React.ReactNode }) {
         numberFilters,
         excludeNumberFilter,
         excludeAllNumberFilters,
+        orderOpt,
+        saveSortOptions,
+        setOrderOpt,
+        setSort,
       } }
     >
       {children}

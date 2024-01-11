@@ -15,6 +15,10 @@ function Table() {
     numberFilters,
     excludeNumberFilter,
     excludeAllNumberFilters,
+    orderOpt,
+    saveSortOptions,
+    setOrderOpt,
+    setSort,
   } = useContext(AppContext);
 
   const dataKeys = Object.keys(data[0] || {});
@@ -85,6 +89,47 @@ function Table() {
           </div>
         ))}
       </div>
+      <div>
+        <label htmlFor="order">Ordenar</label>
+        <select
+          name="order"
+          id="order"
+          data-testid="column-sort"
+          value={ orderOpt }
+          onChange={ ({ target }) => setOrderOpt(target.value) }
+        >
+          {columnOptions.map((key: any) => (
+            <option key={ key }>{key}</option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label htmlFor="asc">Ascendente</label>
+        <input
+          type="radio"
+          name="sort"
+          id="asc"
+          data-testid="column-sort-input-asc"
+          value="ASC"
+          onChange={ ({ target }) => setSort(target.value) }
+        />
+        <label htmlFor="desc">Decrescente</label>
+        <input
+          type="radio"
+          name="sort"
+          id="desc"
+          data-testid="column-sort-input-desc"
+          value="DESC"
+          onChange={ ({ target }) => setSort(target.value) }
+        />
+      </div>
+      <button
+        type="button"
+        data-testid="column-sort-button"
+        onClick={ saveSortOptions }
+      >
+        Ordenar
+      </button>
       <button
         type="button"
         data-testid="button-remove-filters"
@@ -104,9 +149,13 @@ function Table() {
           <tbody>
             {filteredData.map((planet: any) => (
               <tr key={ planet.name }>
-                {dataKeys.map((key) => (
+                {dataKeys.map((key) => (key === 'name' ? (
+                  <td data-testid="planet-name" key={ key }>
+                    {planet[key]}
+                  </td>
+                ) : (
                   <td key={ key }>{planet[key]}</td>
-                ))}
+                )))}
               </tr>
             ))}
           </tbody>
@@ -115,7 +164,9 @@ function Table() {
             {data.map((planet: any) => (
               <tr key={ planet.name }>
                 {dataKeys.map((key) => (
-                  <td key={ key }>{planet[key]}</td>
+                  <td data-testid="planet-name" key={ key }>
+                    {planet[key]}
+                  </td>
                 ))}
               </tr>
             ))}
