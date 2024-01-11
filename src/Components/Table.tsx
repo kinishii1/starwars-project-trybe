@@ -12,6 +12,9 @@ function Table() {
     comparison,
     value,
     columnOptions,
+    numberFilters,
+    excludeNumberFilter,
+    excludeAllNumberFilters,
   } = useContext(AppContext);
 
   const dataKeys = Object.keys(data[0] || {});
@@ -28,7 +31,7 @@ function Table() {
         <label htmlFor="coluna">Coluna</label>
         <select
           name="coluna"
-          value={ column === '' ? 'population' : column }
+          value={ column }
           id="coluna"
           data-testid="column-filter"
           onChange={ ({ target }) => saveOptions(target) }
@@ -67,6 +70,28 @@ function Table() {
           Filtrar
         </button>
       </div>
+      <div>
+        {numberFilters.map((filter: any) => (
+          <div data-testid="filter" key={ filter.column }>
+            <span>{filter.column}</span>
+            <span>{filter.comparison}</span>
+            <span>{filter.value}</span>
+            <button
+              type="button"
+              onClick={ () => excludeNumberFilter(filter.column) }
+            >
+              excluir
+            </button>
+          </div>
+        ))}
+      </div>
+      <button
+        type="button"
+        data-testid="button-remove-filters"
+        onClick={ excludeAllNumberFilters }
+      >
+        Remover Filtros
+      </button>
       <table data-testid="table">
         <thead data-testid="table-header">
           <tr>

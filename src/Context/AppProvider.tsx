@@ -17,9 +17,29 @@ function AppProvider({ children }: { children: React.ReactNode }) {
   const [value, setValue] = useState(0);
   const [numberFilters, setNumberFilters] = useState<any[]>([]);
 
+  const excludeNumberFilter = (filterToRemove: any) => {
+    const newNumberFilters = numberFilters.filter(
+      (numberFilter) => numberFilter.column !== filterToRemove,
+    );
+    setNumberFilters(newNumberFilters);
+    setColumnOptions((prev) => [...prev, column]);
+  };
+
+  const excludeAllNumberFilters = () => {
+    setNumberFilters([]);
+    setColumnOptions([
+      'population',
+      'orbital_period',
+      'diameter',
+      'rotation_period',
+      'surface_water',
+    ]);
+  };
+
   const saveOptions = (target: any) => {
     if (target.name === 'coluna') {
       setColumn(target.value);
+      console.log(target.value);
     }
     if (target.name === 'operador') {
       setComparison(target.value);
@@ -35,6 +55,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
       (columnOption) => columnOption !== numberFilters[numberFilters.length - 1].column,
     );
     setColumnOptions(newColumnOptions);
+    setColumn(columnOptions[0]);
   };
   const handleFilterNumber = () => {
     const newFilter = {
@@ -117,6 +138,9 @@ function AppProvider({ children }: { children: React.ReactNode }) {
         comparison,
         value,
         columnOptions,
+        numberFilters,
+        excludeNumberFilter,
+        excludeAllNumberFilters,
       } }
     >
       {children}
