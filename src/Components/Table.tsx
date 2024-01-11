@@ -11,17 +11,10 @@ function Table() {
     column,
     comparison,
     value,
-
+    columnOptions,
   } = useContext(AppContext);
 
   const dataKeys = Object.keys(data[0] || {});
-  const columnOptions = [
-    'population',
-    'orbital_period',
-    'diameter',
-    'rotation_period',
-    'surface_water',
-  ];
   const comparisonOptions = ['maior que', 'menor que', 'igual a'];
 
   return (
@@ -35,12 +28,12 @@ function Table() {
         <label htmlFor="coluna">Coluna</label>
         <select
           name="coluna"
-          value={ column }
+          value={ column === '' ? 'population' : column }
           id="coluna"
           data-testid="column-filter"
           onChange={ ({ target }) => saveOptions(target) }
         >
-          {columnOptions.map((key) => (
+          {columnOptions.map((key: any) => (
             <option key={ key }>{key}</option>
           ))}
         </select>

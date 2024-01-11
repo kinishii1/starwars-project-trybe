@@ -5,7 +5,14 @@ function AppProvider({ children }: { children: React.ReactNode }) {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState('');
   const [filteredData, setFilteredData] = useState([]);
-  const [column, setColumn] = useState('population');
+  const [columnOptions, setColumnOptions] = useState<any[]>([
+    'population',
+    'orbital_period',
+    'diameter',
+    'rotation_period',
+    'surface_water',
+  ]);
+  const [column, setColumn] = useState(columnOptions[0]);
   const [comparison, setComparison] = useState('maior que');
   const [value, setValue] = useState(0);
   const [numberFilters, setNumberFilters] = useState<any[]>([]);
@@ -22,6 +29,13 @@ function AppProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const updtadeColumnOptions = () => {
+    if (numberFilters.length === 0) return;
+    const newColumnOptions = columnOptions.filter(
+      (columnOption) => columnOption !== numberFilters[numberFilters.length - 1].column,
+    );
+    setColumnOptions(newColumnOptions);
+  };
   const handleFilterNumber = () => {
     const newFilter = {
       column,
@@ -58,6 +72,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
       );
 
       setFilteredData(newFilteredData);
+      updtadeColumnOptions();
       console.log(newFilteredData);
     };
 
@@ -81,8 +96,9 @@ function AppProvider({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     const updateData = () => {
-      const newFilteredData = data.filter((planet: any) => planet
-        .name.toLowerCase().includes(filter.toLowerCase()));
+      const newFilteredData = data
+        .filter((planet: any) => planet
+          .name.toLowerCase().includes(filter.toLowerCase()));
       console.log(newFilteredData);
       setFilteredData(newFilteredData);
     };
@@ -100,6 +116,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
         column,
         comparison,
         value,
+        columnOptions,
       } }
     >
       {children}
