@@ -5,14 +5,12 @@ import Select from './Select';
 import Button from './Button';
 import NumberFilters from './NumberFilters';
 import Radios from './Radios';
-import TableBody from './TableBody';
 import TableHead from './TableHead';
+import { useFilterWord } from '../hooks/useFilterWord';
 
 function Table() {
   const {
     data,
-    setFilter,
-    filteredData,
     saveOptions,
     handleFilterNumber,
     column,
@@ -26,6 +24,8 @@ function Table() {
     setOrderOpt,
     filter,
   } = useContext(AppContext);
+
+  const { filteredData, setFilter } = useFilterWord();
 
   const dataKeys = Object.keys(data[0] || {});
   const comparisonOptions = ['maior que', 'menor que', 'igual a'];
