@@ -1,9 +1,4 @@
-type ButtonProps = {
-  type: 'button' | 'submit' | 'reset';
-  dataTestId?: string;
-  onClick: () => void;
-  children: React.ReactNode;
-};
+import { ButtonProps } from '../types';
 
 function Button({
   type,

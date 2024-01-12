@@ -1,11 +1,4 @@
-type InputProps = {
-  type: string;
-  name?: string;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-  dataTestId?: string;
-  value?: string | number;
-};
+import { InputProps } from '../types';
 
 function Input({
   type,

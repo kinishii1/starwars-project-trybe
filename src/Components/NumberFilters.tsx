@@ -1,15 +1,6 @@
-import { useContext } from "react";
-import AppContext from "../Context/AppContext";
-
-type NumberFiltersProps = {
-  filter: {
-    column: string;
-    comparison: string;
-    value: string;
-  };
-  dataTestId: string;
-  key: string;
-};
+import { useContext } from 'react';
+import AppContext from '../Context/AppContext';
+import { NumberFiltersProps } from '../types';
 
 function NumberFilters({
   filter,

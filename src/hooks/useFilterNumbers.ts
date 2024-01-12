@@ -1,15 +1,5 @@
 import { useEffect, useState } from 'react';
-
-type FilterProps = {
-  data: object[];
-  columnOptions: string[];
-  setColumnOptions: React.Dispatch<React.SetStateAction<any>>;
-  setColumn: React.Dispatch<React.SetStateAction<any>>;
-  column: string;
-  comparison: string;
-  value: string | number;
-  setFilteredData: React.Dispatch<React.SetStateAction<any>>;
-};
+import { FilterProps } from '../types';
 
 export const useFilterNumbers = ({
   data,

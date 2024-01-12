@@ -1,13 +1,13 @@
-type SelectProps = {
-  value: string;
-  options: string[];
-  label: string;
-  name: string;
-  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
-  dataTestId?: string;
-};
+import { SelectProps } from '../types';
 
-function Select({ value, options, label, name, onChange, dataTestId }: SelectProps): JSX.Element {
+function Select({
+  value,
+  options,
+  label,
+  name,
+  onChange,
+  dataTestId = '',
+}: SelectProps): JSX.Element {
   return (
     <>
       <label htmlFor={ name }>{label}</label>

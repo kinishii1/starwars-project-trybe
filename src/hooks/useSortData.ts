@@ -1,11 +1,4 @@
-type SortProps = {
-  sort: string;
-  orderOpt: string;
-  filteredData: string[];
-  setFilteredData: React.Dispatch<React.SetStateAction<any>>;
-  setOrder: React.Dispatch<React.SetStateAction<any>>;
-  order: any;
-};
+import { SortProps } from '../types';
 
 export const useSortData = ({
   sort,

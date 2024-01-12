@@ -1,18 +1,5 @@
 import { useState } from 'react';
-
-type ColumnType =
-  | 'population'
-  | 'orbital_period'
-  | 'diameter'
-  | 'rotation_period'
-  | 'surface_water';
-
-type ComparisonType = 'maior que' | 'menor que' | 'igual a';
-
-type OrderType = {
-  orderOpt: ColumnType;
-  sort: 'ASC' | 'DESC';
-};
+import { ColumnType, ComparisonType, OrderType } from '../types';
 
 export const useOptions = () => {
   const [columnOptions, setColumnOptions] = useState<string[]>([

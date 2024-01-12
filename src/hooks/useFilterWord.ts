@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Data } from '../types';
 
-export const useFilterWord = (data : any) => {
+export const useFilterWord = (data : Data[]) => {
   const [filter, setFilter] = useState('');
-  const [filteredData, setFilteredData] = useState([]);
+  const [filteredData, setFilteredData] = useState<Data[]>([]);
 
   useEffect(() => {
     const updateData = () => {
