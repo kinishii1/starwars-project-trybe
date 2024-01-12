@@ -9,6 +9,7 @@ import AppContext from './AppContext';
 
 function AppProvider({ children }: { children: React.ReactNode }) {
   const { data } = useFetchData('https://swapi.dev/api/planets');
+  const { filter, setFilteredData, setFilter, filteredData } = useFilterWord(data);
   const {
     saveOptions,
     columnOptions,
@@ -16,19 +17,38 @@ function AppProvider({ children }: { children: React.ReactNode }) {
     comparison,
     value,
     orderOpt,
+    sort,
+    order,
+    setOrder,
+    setColumn,
+    setColumnOptions,
     setOrderOpt,
     setSort,
-    sort,
   } = useOptions();
   const {
     handleFilterNumber,
     excludeNumberFilter,
     excludeAllNumberFilters,
     numberFilters,
-  } = useFilterNumbers();
-  const { saveSortOptions, handleSort } = useSortData();
-  const { filter, setFilteredData } = useFilterWord();
-
+  } = useFilterNumbers({
+    data,
+    columnOptions,
+    setColumnOptions,
+    setColumn,
+    column,
+    comparison,
+    value,
+    setFilteredData,
+  });
+  const { saveSortOptions } = useSortData({
+    sort,
+    orderOpt,
+    filteredData,
+    setFilteredData,
+    setOrder,
+    order,
+  });
+  console.log('columnOptions', columnOptions);
   return (
     <AppContext.Provider
       value={ {
@@ -40,16 +60,15 @@ function AppProvider({ children }: { children: React.ReactNode }) {
         value,
         columnOptions,
         numberFilters,
-        excludeNumberFilter,
         excludeAllNumberFilters,
         orderOpt,
         saveSortOptions,
         setOrderOpt,
-        setSort,
         filter,
-        handleSort,
-        sort,
-        setFilteredData,
+        setFilter,
+        filteredData,
+        excludeNumberFilter,
+        setSort,
       } }
     >
       {children}

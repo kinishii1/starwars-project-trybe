@@ -1,14 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-import AppContext from '../Context/AppContext';
+import { useEffect, useState } from 'react';
 
-export const useFilterWord = () => {
+export const useFilterWord = (data : any) => {
   const [filter, setFilter] = useState('');
   const [filteredData, setFilteredData] = useState([]);
-  const {
-    data,
-    orderOpt,
-    handleSort,
-  } = useContext(AppContext);
 
   useEffect(() => {
     const updateData = () => {
@@ -16,14 +10,11 @@ export const useFilterWord = () => {
         ?.filter((planet: any) => planet
           .name.toLowerCase().includes(filter.toLowerCase()));
       console.log(newFilteredData);
-
-      if (orderOpt !== '') {
-        // handleSort();
-      }
-
       setFilteredData(newFilteredData);
     };
     updateData();
+    console.log('filter', filter);
+    console.log('data', data);
   }, [data, filter]);
 
   return { filter, setFilter, filteredData, setFilteredData };

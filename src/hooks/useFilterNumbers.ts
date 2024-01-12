@@ -1,25 +1,35 @@
-import { useContext, useEffect, useState } from 'react';
-import AppContext from '../Context/AppContext';
+import { useEffect, useState } from 'react';
 
-export const useFilterNumbers = () => {
-  const {
-    column,
-    comparison,
-    value,
-    columnOptions,
-    setColumnOptions,
-    setColumn,
-    data,
-    setFilteredData,
-  } = useContext(AppContext);
+type FilterProps = {
+  data: object[];
+  columnOptions: string[];
+  setColumnOptions: React.Dispatch<React.SetStateAction<any>>;
+  setColumn: React.Dispatch<React.SetStateAction<any>>;
+  column: string;
+  comparison: string;
+  value: string | number;
+  setFilteredData: React.Dispatch<React.SetStateAction<any>>;
+};
+
+export const useFilterNumbers = ({
+  data,
+  columnOptions,
+  setColumnOptions,
+  setColumn,
+  column,
+  comparison,
+  value,
+  setFilteredData,
+}: FilterProps) => {
   const [numberFilters, setNumberFilters] = useState<any[]>([]);
+  console.log('columnOptions', columnOptions);
 
-  const excludeNumberFilter = (filterToRemove: any) => {
+  const excludeNumberFilter = (filterToRemove: string) => {
     const newNumberFilters = numberFilters.filter(
       (numberFilter) => numberFilter.column !== filterToRemove,
     );
     setNumberFilters(newNumberFilters);
-    setColumnOptions((prev: any) => [...prev, filterToRemove]);
+    setColumnOptions((prev: any[]) => [...prev, filterToRemove]);
   };
 
   const excludeAllNumberFilters = () => {
@@ -36,8 +46,8 @@ export const useFilterNumbers = () => {
   const updtadeColumnOptions = () => {
     if (numberFilters.length === 0) return;
     const newColumnOptions = columnOptions.filter(
-      (columnOption: any) => columnOption !== numberFilters[numberFilters.length - 1]
-        .column,
+      (columnOption: any) => columnOption
+        !== numberFilters[numberFilters.length - 1].column,
     );
     setColumnOptions(newColumnOptions);
     setColumn(columnOptions[0]);
@@ -50,13 +60,13 @@ export const useFilterNumbers = () => {
       value,
     };
     setNumberFilters([...numberFilters, newFilter]);
-    console.log(numberFilters);
+    console.log('numberFilters', numberFilters);
   };
 
   useEffect(() => {
     const updateData = () => {
       let newFilteredData = data;
-      console.log(newFilteredData);
+      console.log('numberFilters', numberFilters);
       numberFilters.forEach(
         ({
           column: columnFilter,
@@ -78,9 +88,9 @@ export const useFilterNumbers = () => {
         },
       );
 
-      // setFilteredData(newFilteredData);
+      setFilteredData(newFilteredData);
       updtadeColumnOptions();
-      console.log(newFilteredData);
+      console.log('newFilteredData', newFilteredData);
     };
 
     updateData();

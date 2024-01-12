@@ -1,9 +1,20 @@
-import { useContext } from 'react';
-import AppContext from '../Context/AppContext';
+type SortProps = {
+  sort: string;
+  orderOpt: string;
+  filteredData: string[];
+  setFilteredData: React.Dispatch<React.SetStateAction<any>>;
+  setOrder: React.Dispatch<React.SetStateAction<any>>;
+  order: any;
+};
 
-export const useSortData = () => {
-  const { sort, orderOpt, filteredData, setFilteredData, setOrder, order } =
-    useContext(AppContext);
+export const useSortData = ({
+  sort,
+  orderOpt,
+  filteredData,
+  setFilteredData,
+  setOrder,
+  order,
+}: SortProps) => {
   const handleSort = () => {
     const newFilteredData = filteredData?.sort((a: any, b: any) => {
       if (a[orderOpt] === 'unknown') return 1;
@@ -14,7 +25,7 @@ export const useSortData = () => {
       }
       return b[orderOpt] - a[orderOpt];
     });
-    // setFilteredData(newFilteredData);
+    setFilteredData(newFilteredData);
   };
 
   const saveSortOptions = () => {
@@ -23,8 +34,8 @@ export const useSortData = () => {
       sort,
     };
     setOrder(newOrder);
-    console.log(order);
-    // handleSort();
+    console.log('order', order);
+    handleSort();
   };
 
   return {

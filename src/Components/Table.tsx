@@ -6,7 +6,6 @@ import Button from './Button';
 import NumberFilters from './NumberFilters';
 import Radios from './Radios';
 import TableHead from './TableHead';
-import { useFilterWord } from '../hooks/useFilterWord';
 
 function Table() {
   const {
@@ -23,9 +22,9 @@ function Table() {
     saveSortOptions,
     setOrderOpt,
     filter,
+    setFilter,
+    filteredData,
   } = useContext(AppContext);
-
-  const { filteredData, setFilter } = useFilterWord();
 
   const dataKeys = Object.keys(data[0] || {});
   const comparisonOptions = ['maior que', 'menor que', 'igual a'];
@@ -48,19 +47,6 @@ function Table() {
           value={ column }
           dataTestId="column-filter"
         />
-        {/*
-        <label htmlFor="coluna">Coluna</label>
-        <select
-          name="coluna"
-          value={ column }
-          id="coluna"
-          data-testid="column-filter"
-          onChange={ ({ target }) => saveOptions(target) }
-        >
-          {columnOptions.map((key: any) => (
-            <option key={ key }>{key}</option>
-          ))}
-        </select> */}
         <Select
           label="Operador"
           name="operador"
@@ -69,18 +55,6 @@ function Table() {
           value={ comparison }
           dataTestId="comparison-filter"
         />
-        {/* <label htmlFor="operador">Operador</label>
-        <select
-          name="operador"
-          id="operador"
-          value={ comparison }
-          data-testid="comparison-filter"
-          onChange={ ({ target }) => saveOptions(target) }
-        >
-          {comparisonOptions.map((key) => (
-            <option key={ key }>{key}</option>
-          ))}
-        </select> */}
         <label htmlFor="valor">Valor</label>
         <Input
           type="number"
@@ -89,15 +63,6 @@ function Table() {
           dataTestId="value-filter"
           value={ value }
         />
-        {/* <input
-          type="number"
-          name="valor"
-          id="valor"
-          data-testid="value-filter"
-          value={ value }
-          onChange={ ({ target }) => saveOptions(target) }
-        /> */}
-
         <Button
           type="button"
           dataTestId="button-filter"
@@ -105,13 +70,6 @@ function Table() {
         >
           Filtrar
         </Button>
-        {/* <button
-          type="button"
-          data-testid="button-filter"
-          onClick={ handleFilterNumber }
-        >
-          Filtrar
-        </button> */}
       </div>
       <div>
         {numberFilters.map((filterNum: any) => (
@@ -120,17 +78,6 @@ function Table() {
             dataTestId="filter"
             key={ filterNum.column }
           />
-          // <div data-testid="filter" key={ filterNum.column }>
-          //   <span>{filterNum.column}</span>
-          //   <span>{filterNum.comparison}</span>
-          //   <span>{filterNum.value}</span>
-          //   <button
-          //     type="button"
-          //     onClick={ () => excludeNumberFilter(filterNum.column) }
-          //   >
-          //     excluir
-          //   </button>
-          // </div>
         ))}
       </div>
       <div>
@@ -142,40 +89,8 @@ function Table() {
           value={ orderOpt }
           dataTestId="column-sort"
         />
-        {/* <label htmlFor="order">Ordenar</label>
-        <select
-          name="order"
-          id="order"
-          data-testid="column-sort"
-          value={ orderOpt }
-          onChange={ ({ target }) => setOrderOpt(target.value) }
-        >
-          {columnOptions.map((key: any) => (
-            <option key={ key }>{key}</option>
-          ))}
-        </select> */}
       </div>
       <Radios />
-      {/* <div>
-        <label htmlFor="asc">Ascendente</label>
-        <input
-          type="radio"
-          name="sort"
-          id="asc"
-          data-testid="column-sort-input-asc"
-          value="ASC"
-          onChange={ ({ target }) => setSort(target.value) }
-        />
-        <label htmlFor="desc">Decrescente</label>
-        <input
-          type="radio"
-          name="sort"
-          id="desc"
-          data-testid="column-sort-input-desc"
-          value="DESC"
-          onChange={ ({ target }) => setSort(target.value) }
-        />
-      </div> */}
       <Button
         type="button"
         dataTestId="column-sort-button"
@@ -183,14 +98,6 @@ function Table() {
       >
         Ordenar
       </Button>
-
-      {/* <button
-        type="button"
-        data-testid="column-sort-button"
-        onClick={ saveSortOptions }
-      >
-        Ordenar
-      </button> */}
       <Button
         type="button"
         dataTestId="button-remove-filters"
@@ -198,25 +105,11 @@ function Table() {
       >
         Remover Filtros
       </Button>
-      {/* <button
-        type="button"
-        data-testid="button-remove-filters"
-        onClick={ excludeAllNumberFilters }
-      >
-        Remover Filtros
-      </button> */}
       <table data-testid="table">
         <TableHead />
-        {/* <thead data-testid="table-header">
-          <tr>
-            {dataKeys.map((key) => (
-              <th key={ key }>{key}</th>
-            ))}
-          </tr>
-        </thead> */}
-        {filteredData.length > 0 ? (
+        {filteredData?.length > 0 ? (
           <tbody>
-            {filteredData.map((planet: any) => (
+            {filteredData?.map((planet: any) => (
               <tr key={ planet.name }>
                 {dataKeys.map((key) => (key === 'name' ? (
                   <td data-testid="planet-name" key={ key }>
