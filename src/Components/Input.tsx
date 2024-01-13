@@ -7,7 +7,7 @@ function Input({
   placeholder = '',
   dataTestId = '',
   value = '',
-}: InputProps) {
+}: InputProps) : JSX.Element {
   return (
     <input
       type={ type }

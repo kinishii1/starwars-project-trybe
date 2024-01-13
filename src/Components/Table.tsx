@@ -6,11 +6,12 @@ import Button from './Button';
 import NumberFilters from './NumberFilters';
 import Radios from './Radios';
 import TableHead from './TableHead';
+import { ColumnType } from '../types';
 
 function Table() {
   const {
     data,
-    saveOptions,
+    handleColumnChange,
     handleFilterNumber,
     column,
     comparison,
@@ -43,7 +44,7 @@ function Table() {
           label="Coluna"
           name="coluna"
           options={ columnOptions }
-          onChange={ ({ target }) => saveOptions(target) }
+          onChange={ ({ target }) => handleColumnChange(target) }
           value={ column }
           dataTestId="column-filter"
         />
@@ -51,7 +52,7 @@ function Table() {
           label="Operador"
           name="operador"
           options={ comparisonOptions }
-          onChange={ ({ target }) => saveOptions(target) }
+          onChange={ ({ target }) => handleColumnChange(target) }
           value={ comparison }
           dataTestId="comparison-filter"
         />
@@ -59,7 +60,7 @@ function Table() {
         <Input
           type="number"
           name="valor"
-          onChange={ ({ target }) => saveOptions(target) }
+          onChange={ ({ target }) => handleColumnChange(target) }
           dataTestId="value-filter"
           value={ value }
         />
@@ -85,7 +86,7 @@ function Table() {
           label="Ordenar"
           name="order"
           options={ columnOptions }
-          onChange={ ({ target }) => setOrderOpt(target.value) }
+          onChange={ ({ target }) => setOrderOpt(target.value as ColumnType) }
           value={ orderOpt }
           dataTestId="column-sort"
         />

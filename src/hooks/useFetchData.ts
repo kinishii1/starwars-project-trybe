@@ -6,18 +6,26 @@ export const useFetchData = (url: string) => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch(url);
-      let resData = await response.json();
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        let resData = await response.json();
 
-      resData = resData.results.map((planet: Data) => {
-        const { residents, ...planetWithoutResidents } = planet;
-        return planetWithoutResidents;
-      });
-      console.log(`resData: ${resData}`);
-      setData(resData);
+        resData = resData.results.map((planet: Data) => {
+          const { residents, ...planetWithoutResidents } = planet;
+          return planetWithoutResidents;
+        });
+
+        setData(resData);
+      } catch (error) {
+        console.log(error);
+      }
     };
+
     fetchData();
-  }, []);
+  }, [url]);
 
   return { data };
 };

@@ -7,7 +7,7 @@ function Button({
   children,
 }: ButtonProps): JSX.Element {
   return (
-    <button type={ type } data-testid={ dataTestId } onClick={ onClick }>
+    <button type={ type } data-testid={ dataTestId } onClick={ onClick as any }>
       {children}
     </button>
   );

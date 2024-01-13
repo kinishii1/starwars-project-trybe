@@ -1,4 +1,4 @@
-import { SortProps } from '../types';
+import { Data, SortProps } from '../types';
 
 export const useSortData = ({
   sort,
@@ -9,16 +9,21 @@ export const useSortData = ({
   order,
 }: SortProps) => {
   const handleSort = () => {
-    const newFilteredData = filteredData?.sort((a: any, b: any) => {
-      if (a[orderOpt] === 'unknown') return 1;
-      if (b[orderOpt] === 'unknown') return -1;
+    if (!filteredData) {
+      throw new Error('filteredData is undefined');
+    }
+
+    const newFilteredData = filteredData?.sort((a: Data, b: Data) => {
+      if (a[orderOpt as keyof Data] === 'unknown') return 1;
+      if (b[orderOpt as keyof Data] === 'unknown') return -1;
 
       if (sort === 'ASC') {
-        return a[orderOpt] - b[orderOpt];
+        return Number(a[orderOpt as keyof Data]) - Number(b[orderOpt as keyof Data]);
       }
-      return b[orderOpt] - a[orderOpt];
+      return Number(b[orderOpt as keyof Data]) - Number(a[orderOpt as keyof Data]);
     });
     setFilteredData(newFilteredData);
+    console.log('newFilteredData', newFilteredData);
   };
 
   const saveSortOptions = () => {

@@ -12,7 +12,7 @@ function Radios() {
         id="asc"
         data-testid="column-sort-input-asc"
         value="ASC"
-        onChange={ ({ target }) => setSort(target.value) }
+        onChange={ ({ target }) => setSort(target.value as 'ASC' | 'DESC') }
       />
       <label htmlFor="desc">Decrescente</label>
       <input
@@ -21,7 +21,7 @@ function Radios() {
         id="desc"
         data-testid="column-sort-input-desc"
         value="DESC"
-        onChange={ ({ target }) => setSort(target.value) }
+        onChange={ ({ target }) => setSort(target.value as 'ASC' | 'DESC') }
       />
     </div>
   );

@@ -13,7 +13,7 @@ describe('table', () => {
   });
   it('render the table body correctly', async () => {
     render(
-      <AppContext.Provider value={mockdata}>
+      <AppContext.Provider value={mockdata as any}>
         <Table />
       </AppContext.Provider>
     );
@@ -24,7 +24,7 @@ describe('table', () => {
   });
   it('render the table body correctly', async () => {
     render(
-      <AppContext.Provider value={mockdata}>
+      <AppContext.Provider value={mockdata as any}>
         <Table />
       </AppContext.Provider>
     );

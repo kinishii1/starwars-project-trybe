@@ -18,28 +18,30 @@ export const useOptions = () => {
   const [sort, setSort] = useState<'ASC' | 'DESC'>('ASC');
   const [order, setOrder] = useState<OrderType>({ orderOpt, sort });
 
-  const saveOptions = (target: any) => {
+  const handleColumnChange = (
+    target: (EventTarget & HTMLSelectElement) | (EventTarget & HTMLInputElement),
+  ) => {
     if (target.name === 'coluna') {
-      setColumn(target.value);
+      setColumn(target.value as ColumnType);
       console.log(target.value);
     }
     if (target.name === 'operador') {
-      setComparison(target.value);
+      setComparison(target.value as ComparisonType);
     }
     if (target.name === 'valor') {
       setValue(target.value);
     }
     if (target.name === 'order') {
-      setOrderOpt(target.value);
+      setOrderOpt(target.value as ColumnType);
       console.log(orderOpt);
     }
     if (target.name === 'sort') {
-      setSort(target.value);
+      setSort(target.value as 'ASC' | 'DESC');
       console.log(sort);
     }
   };
   return {
-    saveOptions,
+    handleColumnChange,
     columnOptions,
     column,
     comparison,

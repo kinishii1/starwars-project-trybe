@@ -11,7 +11,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
   const { data } = useFetchData('https://swapi.dev/api/planets');
   const { filter, setFilteredData, setFilter, filteredData } = useFilterWord(data);
   const {
-    saveOptions,
+    handleColumnChange,
     columnOptions,
     column,
     comparison,
@@ -53,7 +53,7 @@ function AppProvider({ children }: { children: React.ReactNode }) {
     <AppContext.Provider
       value={ {
         data,
-        saveOptions,
+        handleColumnChange,
         handleFilterNumber,
         column,
         comparison,

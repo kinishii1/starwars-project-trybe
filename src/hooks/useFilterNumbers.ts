@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { FilterProps } from '../types';
+import { ColumnType, Data, FilterProps } from '../types';
 
 export const useFilterNumbers = ({
   data,
@@ -19,7 +19,7 @@ export const useFilterNumbers = ({
       (numberFilter) => numberFilter.column !== filterToRemove,
     );
     setNumberFilters(newNumberFilters);
-    setColumnOptions((prev: any[]) => [...prev, filterToRemove]);
+    setColumnOptions((prev: string[]) => [...prev, filterToRemove]);
   };
 
   const excludeAllNumberFilters = () => {
@@ -36,11 +36,11 @@ export const useFilterNumbers = ({
   const updtadeColumnOptions = () => {
     if (numberFilters.length === 0) return;
     const newColumnOptions = columnOptions.filter(
-      (columnOption: any) => columnOption
+      (columnOption: string) => columnOption
         !== numberFilters[numberFilters.length - 1].column,
     );
     setColumnOptions(newColumnOptions);
-    setColumn(columnOptions[0]);
+    setColumn(columnOptions[0] as ColumnType);
   };
 
   const handleFilterNumber = () => {
@@ -63,15 +63,15 @@ export const useFilterNumbers = ({
           comparison: comparisonFilter,
           value: valueFilter,
         }) => {
-          newFilteredData = newFilteredData.filter((planet: any) => {
+          newFilteredData = newFilteredData.filter((planet: Data) => {
             if (comparisonFilter === 'maior que') {
-              return Number(planet[columnFilter]) > Number(valueFilter);
+              return Number(planet[columnFilter as keyof Data]) > Number(valueFilter);
             }
             if (comparisonFilter === 'menor que') {
-              return Number(planet[columnFilter]) < Number(valueFilter);
+              return Number(planet[columnFilter as keyof Data]) < Number(valueFilter);
             }
             if (comparisonFilter === 'igual a') {
-              return Number(planet[columnFilter]) === Number(valueFilter);
+              return Number(planet[columnFilter as keyof Data]) === Number(valueFilter);
             }
             return planet;
           });

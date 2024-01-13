@@ -6,7 +6,7 @@ function NumberFilters({
   filter,
   dataTestId,
   key,
-}: NumberFiltersProps) {
+}: NumberFiltersProps) : JSX.Element {
   const { excludeNumberFilter } = useContext(AppContext);
   return (
     <div data-testid={ dataTestId } key={ key }>

@@ -8,7 +8,7 @@ export const useFilterWord = (data : Data[]) => {
   useEffect(() => {
     const updateData = () => {
       const newFilteredData = data
-        ?.filter((planet: any) => planet
+        ?.filter((planet: Data) => planet
           .name.toLowerCase().includes(filter.toLowerCase()));
       console.log(newFilteredData);
       setFilteredData(newFilteredData);
